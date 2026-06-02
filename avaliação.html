@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação de Imóveis | Perícia | Vistoria | Entrega de Chave</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #2c3e50, #3498db);
+            color: white;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+        
+        nav a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), 
+                        url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 180px 0 120px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        
+        .hero h2 {
+            font-size: 1.5em;
+            margin-bottom: 40px;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #e74c3c;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: background 0.3s;
+        }
+        
+        .cta-button:hover {
+            background: #c0392b;
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 80px 0;
+        }
+        
+        section h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 50px;
+            color: #2c3e50;
+        }
+        
+        /* Público-Alvo */
+        .audience {
+            background: #f8f9fa;
+        }
+        
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .audience-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .audience-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .audience-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .audience-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            display: block;
+        }
+        
+        /* Serviços */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+        
+        .service-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Diferenciais */
+        .differentiators {
+            background: #2c3e50;
+            color: white;
+        }
+        
+        .differentiators h2 {
+            color: white;
+        }
+        
+        .differentiators-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .differentiator-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 8px;
+        }
+        
+        .differentiator-item span {
+            font-size: 1.5em;
+        }
+        
+        /* FAQ */
+        .faq-item {
+            background: white;
+            margin-bottom: 15px;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .faq-item h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .faq-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        /* Contato */
+        .contact {
+            background: #f8f9fa;
+        }
+        
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: #2980b9;
+        }
+        
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+        
+        footer p {
+            opacity: 0.8;
+        }
+        
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2em;
+            }
+            
+            .hero h2 {
+                font-size: 1.2em;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+            
+            section h2 {
+                font-size: 2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Avaliação Imobiliária Pro</div>
+                <ul>
+                    <li><a href="#publico">Para Quem</a></li>
+                    <li><a href="#servicos">Serviços</a></li>
+                    <li><a href="#diferenciais">Diferenciais</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Avaliação Imobiliária, Perícia e Vistoria Confiáveis</h1>
+            <h2>Laudos técnicos, perícias judiciais e entrega de chaves com segurança e rapidez para advogados, famílias em separação e novos proprietários</h2>
+            <a href="#contato" class="cta-button">Solicite um Orçamento Gratuito</a>
+        </div>
+    </section>
+
+    <section id="publico" class="audience">
+        <div class="container">
+            <h2>Para Quem Serve</h2>
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <span class="icon">⚖️</span>
+                    <h3>Advogados</h3>
+                    <p>Laudos periciais e parecer técnico para sustentar petições, perícias judiciais e assistências técnicas com fundamentação sólida.</p>
+                </div>
+                <div class="audience-card">
+                    <span class="icon">👨‍👩‍👧‍👦</span>
+                    <h3>Pessoas em Divórcio</h3>
+                    <p>Avaliações imparciais para partilha justa de bens e documentação técnica para acordos matrimoniais.</p>
+                </div>
+                <div class="audience-card">
+                    <span class="icon">📋</span>
+                    <h3>Inventários e Sucessões</h3>
+                    <p>Regularização de valores patrimoniais com laudos formais para cartório e processos de inventário.</p>
+                </div>
+                <div class="audience-card">
+                    <span class="icon">🔑</span>
+                    <h3>Novas Compras</h3>
+                    <p>Vistorias pré-entrega, checklists de defeitos e entrega de chaves com relatório detalhado e fotos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicos">
+        <div class="container">
+            <h2>Nossos Serviços</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>🏠 Avaliação de Imóvel</h3>
+                    <p>Valor de mercado preciso, laudo técnico completo e relatório detalhado com fundamentação normativa.</p>
+                </div>
+                <div class="service-card">
+                    <h3>⚖️ Perícia Judicial</h3>
+                    <p>Elaboração de laudos periciais com fundamentação técnica, acompanhamento processual e assistência técnica.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🔍 Vistoria Completa</h3>
+                    <p>Verificação pré e pós-entrega, registro de não conformidades, fotos datadas e georreferenciadas.</p>
+                </div>
+                <div class="service-card">
+                    <h3>🔑 Entrega de Chaves</h3>
+                    <p>Conferência completa, checklist detalhado e emissão de termo de entrega/recebimento formal.</p>
+                </div>
+                <div class="service-card">
+                    <h3>📄 Parecer Técnico</h3>
+                    <p>Relatório objetivo para negociações, homologações e acordos em divórcio e inventário.</p>
+                </div>
+                <div class="service-card">
+                    <h3>📊 Laudos para Cartório</h3>
+                    <p>Documentação formal aceita em cartórios para regularização de imóveis em inventários e transações.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="diferenciais" class="differentiators">
+        <div class="container">
+            <h2>Por Que Escolher Nós</h2>
+            <div class="differentiators-list">
+                <div class="differentiator-item">
+                    <span>✓</span>
+                    <p>Laudos com fundamentação técnica e suporte documental completo</p>
+                </div>
+                <div class="differentiator-item">
+                    <span>✓</span>
+                    <p>Prazo rápido com opção de emissão emergencial</p>
+                </div>
+                <div class="differentiator-item">
+                    <span>✓</span>
+                    <p>Peritos registrados com experiência em direito imobiliário</p>
+                </div>
+                <div class="differentiator-item">
+                    <span>✓</span>
+                    <p>Relatórios digitais com fotos georreferenciadas</p>
+                </div>
+                <div class="differentiator-item">
+                    <span>✓</span>
+                    <p>Atendimento personalizado a advogados e escritórios</p>
+                </div>
+                <div class="differentiator-item">
+                    <span>✓</span>
+                    <p>Atendimento em toda Região Metropolitana</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq">
+        <div class="container">
+            <h2>Perguntas Frequentes</h2>
+            <div class="faq-item">
+                <h3>Quanto tempo leva para emitir um laudo?</h3>
+                <p>Normalmente 3-5 dias úteis após a vistoria. Temos opção de emissão emergencial em 24-48 horas para casos urgentes.</p>
+            </div>
+            <div class="faq-item">
+                <h3>O laudo tem validade para processo judicial?</h3>
+                <p>Sim! Todos os laudos são assinados por perito habilitado e seguem normas técnicas, sendo aceitos em juízo.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Vocês atendem regiões fora da cidade?</h3>
+                <p>Atendemos toda Região Metropolitana de Campinas. Para outras regiões, consulte taxas de deslocamento.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Quais documentos são necessários para a avaliação?</h3>
+                <p>Cópia do IPTU, matrícula do imóvel e documento de identificação. Para inventário/divórcio, adicionamos documentos processuais.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Como funciona a vistoria para entrega de chaves?</h3>
+                <p>Agendamos visita conjunta, registramos todas as condições com fotos, emitimos checklist detalhado e termo de recebimento.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contato" class="contact">
+        <div class="container">
+            <h2>Entre em Contato</h2>
+            <div class="contact-form">
+                <!-- Formulário configurado para enviar e-mail para mauberozzi@gmail.com -->
+                <form action="https://formsubmit.co/mauberozzi@gmail.com" method="POST">
+                    
+                    <!-- Redirecionamento após envio (opcional - remove se não quiser) -->
+                    <input type="hidden" name="_redirect" value="https://seusite.com.br/obrigado">
+                    
+                    <!-- Assunto do e-mail -->
+                    <input type="hidden" name="_subject" value="Novo orçamento - Avaliação Imobiliária Pro">
+                    
+                    <!-- Desativar captcha (opcional) -->
+                    <input type="hidden" name="_captcha" value="false">
+                    
+                    <!-- Resposta em português -->
+                    <input type="hidden" name="_template" value="table">
+                    
+                    <div class="form-group">
+                        <label for="nome">Nome Completo</label>
+                        <input type="text" id="nome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefone">Telefone/WhatsApp</label>
+                        <input type="tel" id="telefone" name="telefone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">E-mail</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="endereco">Endereço do Imóvel</label>
+                        <input type="text" id="endereco" name="endereco" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="servico">Tipo de Serviço</label>
+                        <select id="servico" name="servico" required>
+                            <option value="">Selecione...</option>
+                            <option value="Avaliação de Imóvel">Avaliação de Imóvel</option>
+                            <option value="Perícia Judicial">Perícia Judicial</option>
+                            <option value="Vistoria">Vistoria</option>
+                            <option value="Entrega de Chave">Entrega de Chave</option>
+                            <option value="Parecer Técnico">Parecer Técnico</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="urgencia">Urgência</label>
+                        <select id="urgencia" name="urgencia">
+                            <option value="Normal">Normal (3-5 dias)</option>
+                            <option value="Urgente">Urgente (24-48h)</option>
+                            <option value="Emergencial">Emergencial (same day)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="mensagem">Mensagem</label>
+                        <textarea id="mensagem" name="mensagem" placeholder="Descreva sua necessidade (divórcio, inventário, compra nova, etc.)"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Solicitar Orçamento Gratuito</button>
+                </form>
+                
+                <p style="text-align: center; margin-top: 20px; color: #666; font-size: 0.9em;">
+                    ✅ Assim que alguém enviar, você receberá o e-mail diretamente em <strong>mauberozzi@gmail.com</strong>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2026 Avaliação Imobiliária Pro. Todos os direitos reservados.</p>
+            <p>Atendimento em Campinas e Região Metropolitana de São Paulo</p>
+        </div>
+    </footer>
+</body>
+</html>
