@@ -1,0 +1,159 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CYBER DEFENDER ANTIVIRUS</title>
+
+<style>
+*{box-sizing:border-box;font-family:Arial}
+body{margin:0;background:#080d12;color:#eafff1}
+header{text-align:center;padding:25px;background:#101a20;border-bottom:1px solid #00ff88}
+h1{color:#00ff88;letter-spacing:3px}
+main{max-width:850px;margin:25px auto;padding:15px}
+.card{background:#111c23;padding:22px;border:1px solid #194a36;border-radius:12px;margin-bottom:20px}
+h2{color:#00ff88}
+button{background:#00ff88;color:#06140c;border:0;padding:13px;border-radius:7px;font-weight:bold;cursor:pointer;margin:5px}
+input{color:white;background:#080d12;padding:12px;width:100%;border:1px solid #00ff88;border-radius:7px;margin:12px 0}
+#result{padding:15px;background:#080d12;border-radius:8px;margin-top:15px;overflow-wrap:anywhere;line-height:1.8}
+#history{line-height:2;color:#00ff88;overflow-wrap:anywhere}
+.status{font-size:24px;font-weight:bold;color:#00ff88}
+.progress{height:10px;background:#26352e;border-radius:20px;margin-top:15px;overflow:hidden}
+.bar{height:100%;width:0;background:#00ff88;transition:width .2s}
+.red{color:#ff5252}
+.green{color:#00ff88}
+.yellow{color:#ffbd45}
+</style>
+</head>
+
+<body>
+
+<header>
+<h1>🛡️ CYBER DEFENDER</h1>
+<p>ANTIVIRUS SECURITY CENTER</p>
+<small>PAINEL DE SEGURANÇA DIGITAL</small>
+</header>
+
+<main>
+
+<div class="card">
+<h2>🛡️ Proteção</h2>
+<div class="status" id="status">AGUARDANDO</div>
+<p id="description">Sistema pronto.</p>
+</div>
+
+<div class="card">
+<h2>🔍 Scanner de arquivos</h2>
+<input type="file" id="file">
+<button onclick="scan()">ANALISAR ARQUIVO</button>
+<div class="progress"><div class="bar" id="bar"></div></div>
+<div id="result">Selecione um arquivo para começar.</div>
+</div>
+
+<div class="card">
+<h2>🔐 Gerador de senhas</h2>
+<input id="password" readonly placeholder="Sua senha aparecerá aqui">
+<button onclick="generate()">GERAR SENHA</button>
+<button onclick="copyPassword()">COPIAR</button>
+</div>
+
+<div class="card">
+<h2>📊 Histórico</h2>
+<div id="history">Sistema iniciado...</div>
+</div>
+
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+
+function log(text) {
+  const item = document.createElement("div");
+  item.textContent = "» " + text;
+  $("history").prepend(item);
+}
+
+async function scan() {
+  const file = $("file").files[0];
+
+  if (!file) {
+    alert("Selecione um arquivo!");
+    return;
+  }
+
+  $("status").textContent = "ANALISANDO...";
+  $("description").textContent = "Calculando hash do arquivo...";
+  $("result").textContent = "Verificando...";
+  $("bar").style.width = "20%";
+
+  try {
+    if (!crypto.subtle) {
+      throw new Error("Utilize o site em HTTPS ou localhost.");
+    }
+
+    const buffer = await file.arrayBuffer();
+
+    const digest = await crypto.subtle.digest("SHA-256", buffer);
+
+    const hash = Array.from(new Uint8Array(digest))
+      .map(b => b.toString(16).padStart(2, "0"))
+      .join("");
+
+    $("bar").style.width = "60%";
+
+    $("status").textContent = "HASH CALCULADO";
+    $("result").textContent =
+      "Arquivo: " + file.name +
+      "\nSHA-256: " + hash +
+      "\n\nHash calculado localmente com sucesso.";
+
+    $("bar").style.width = "100%";
+    $("description").textContent =
+      "Identificação calculada. Não foi feita uma análise antivírus real.";
+
+    log("Hash calculado: " + file.name);
+
+  } catch (error) {
+    $("status").textContent = "ERRO";
+    $("result").textContent = error.message;
+    log("Erro na análise.");
+  }
+}
+
+function generate() {
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*";
+
+  const values = new Uint32Array(20);
+  crypto.getRandomValues(values);
+
+  let password = "";
+
+  for (const value of values) {
+    password += chars[value % chars.length];
+  }
+
+  $("password").value = password;
+  log("Senha gerada.");
+}
+
+async function copyPassword() {
+  const value = $("password").value;
+
+  if (!value) {
+    alert("Gere uma senha primeiro!");
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(value);
+    alert("Senha copiada!");
+  } catch {
+    alert("Não foi possível copiar automaticamente.");
+  }
+}
+</script>
+
+</body>
+</html>
